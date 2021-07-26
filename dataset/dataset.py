@@ -14,6 +14,7 @@ from torch._utils import _accumulate
 import torchvision.transforms as transforms
 
 
+
 class Batch_Balanced_Dataset(object):
 
     def __init__(self, opt):
@@ -94,7 +95,7 @@ class Batch_Balanced_Dataset(object):
                 balanced_batch_texts += text
             except ValueError:
                 pass
-
+        
         balanced_batch_images = torch.cat(balanced_batch_images, 0)
 
         return balanced_batch_images, balanced_batch_texts
@@ -297,6 +298,7 @@ class AlignCollate(object):
     def __call__(self, batch):
         batch = filter(lambda x: x is not None, batch)
         images, labels = zip(*batch)
+
 
         if self.keep_ratio_with_pad:  # same concept with 'Rosetta' paper
             resized_max_w = self.imgW

@@ -69,14 +69,16 @@ def demo(opt):
 
 
             log = open(f'./log_demo_result.txt', 'a')
-            dashed_line = '-' * 80
-            head = f'{"image_path":25s}\t{"predicted_labels":25s}\tconfidence score'
+            dashed_line = '-' * 86
+            head = f'{"image_path":25s}\t{"predicted_labels":25s}\tconfidence score\tCorrect'
             
             print(f'{dashed_line}\n{head}\n{dashed_line}')
             log.write(f'{dashed_line}\n{head}\n{dashed_line}\n')
 
             preds_prob = F.softmax(preds, dim=2)
             preds_max_prob, _ = preds_prob.max(dim=2)
+            total = len(image_path_list)
+            correct = 0
             for img_name, pred, pred_max_prob in zip(image_path_list, preds_str, preds_max_prob):
                 if 'Attn' in opt.Prediction:
                     pred_EOS = pred.find('[s]')

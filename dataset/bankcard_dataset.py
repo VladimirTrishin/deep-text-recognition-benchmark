@@ -39,7 +39,7 @@ class BankCardDataset(Dataset):
         image_paths = np.hstack((self.images[index], np.random.choice(self.images, image_count-1)))
         label = ''.join([ip.name[:4] for ip in image_paths])
         label = label.replace('_', '')
-        img = np.vstack([np.array(Image.open(str(ip))) for ip in image_paths])
+        img = np.hstack([np.array(Image.open(str(ip))) for ip in image_paths])
         if self.augmentation is not None:
             img = self.augmentation(img)
         return (Image.fromarray(img).convert(self.color_format), label)

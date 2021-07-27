@@ -10,6 +10,7 @@ import torch.backends.cudnn as cudnn
 import torch.nn.init as init
 import torch.optim as optim
 import torch.utils.data
+from torch.utils.tensorboard import SummaryWriter
 import numpy as np
 from tqdm import tqdm
 
@@ -23,7 +24,6 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def train(opt):
     """ dataset preparation """
-
     train_dataset = BankCardDataset(opt.train_data)
     print(len(train_dataset))
     ac = AlignCollate(imgH=opt.imgH, imgW=opt.imgW, keep_ratio_with_pad=opt.PAD)
@@ -142,6 +142,8 @@ def train(opt):
     best_norm_ED = -1
     iteration = start_iter
 
+    writer = SummaryWriter(f'./runs/{opt.exp_name}')
+
     for epoch in range(opt.num_iter):
         # train part
         for batch in tqdm(train_loader):
@@ -182,9 +184,14 @@ def train(opt):
                     valid_loss, current_accuracy, current_norm_ED, preds, confidence_score, labels, infer_time, length_of_data = validation(
                         model, criterion, valid_loader, converter, opt)
                 model.train()
-
+                train_loss = loss_avg.val()
                 # training loss and validation loss
-                loss_log = f'[{iteration+1}/{opt.num_iter}] Train loss: {loss_avg.val():0.5f}, Valid loss: {valid_loss:0.5f}, Elapsed_time: {elapsed_time:0.5f}'
+                loss_log = f'[{iteration+1}/{opt.num_iter}] Train loss: {train_loss:0.5f}, Valid loss: {valid_loss:0.5f}, Elapsed_time: {elapsed_time:0.5f}'
+                writer.add_scalar('Loss/train', train_loss, epoch)
+                writer.add_scalar('Loss/test', valid_loss, epoch)
+                writer.add_scalar('EditDistance', current_norm_ED)
+                writer.add_scalar('Accuracy', current_accuracy)
+                
                 loss_avg.reset()
 
                 current_model_log = f'{"Current_accuracy":17s}: {current_accuracy:0.3f}, {"Current_norm_ED":17s}: {current_norm_ED:0.2f}'

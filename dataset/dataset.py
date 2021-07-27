@@ -5,6 +5,7 @@ import six
 import math
 import lmdb
 import torch
+from pathlib import Path
 
 from natsort import natsorted
 from PIL import Image
@@ -250,8 +251,8 @@ class RawDataset(Dataset):
                 img = Image.new('RGB', (self.opt.imgW, self.opt.imgH))
             else:
                 img = Image.new('L', (self.opt.imgW, self.opt.imgH))
-
-        return (img, self.image_path_list[index])
+        lbl = Path(self.image_path_list[index]).with_suffix('').name.repace('_', '')
+        return (img, lbl)
 
 
 class ResizeNormalize(object):

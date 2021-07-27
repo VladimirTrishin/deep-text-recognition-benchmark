@@ -14,17 +14,17 @@ class Augmentation(object):
             iaa.GammaContrast((0.5, 2.0)),
             iaa.Crop(px=(0, 4)),
             iaa.Affine(
-                rotate=(-10, 10),
-                scale={"x": (0.8, 1.1), "y": (0.9, 1.1)},
-                translate_percent={"x": (-0.05, 0.05), "y": (-0.05, 0.05)}),
+                rotate=(-1, 1),
+                scale={"x": (0.8, 1.02), "y": (0.85, 1.0)},
+                translate_percent={"x": (-0.01, 0.01), "y": (-0.05, 0.05)}),
         ])
 
     def __call__(self, image):
-        self.seq(image=image) 
+        return self.seq(image=image) 
 
 class BankCardDataset(Dataset):
     
-    def __init__(self, root, min_size=4, max_size=5, augmentation=None, rgb=False):
+    def __init__(self, root, min_size=4, max_size=5, augmentation=Augmentation(), rgb=False):
         self.color_format = 'RBG' if rgb else 'L'
         self.augmentation = augmentation
         self.min_size = min_size

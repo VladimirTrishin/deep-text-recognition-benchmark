@@ -87,10 +87,11 @@ def demo(opt):
 
                 # calculate confidence score (= multiply of pred_max_prob)
                 confidence_score = pred_max_prob.cumprod(dim=0)[-1]
-
-                print(f'{img_name:25s}\t{pred:25s}\t{confidence_score:0.4f}')
-                log.write(f'{img_name:25s}\t{pred:25s}\t{confidence_score:0.4f}\n')
-
+                is_correct = pred == img_name
+                correct += is_correct
+                print(f'{img_name:25s}\t{pred:25s}\t{confidence_score:0.4f}\t{is_correct}')
+                log.write(f'{img_name:25s}\t{pred:25s}\t{confidence_score:0.4f}\t{is_correct}\n')
+            print(f'Accuracy: {correct/total}')
             log.close()
 
 if __name__ == '__main__':

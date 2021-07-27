@@ -189,8 +189,8 @@ def train(opt):
                 loss_log = f'[{iteration+1}/{opt.num_iter}] Train loss: {train_loss:0.5f}, Valid loss: {valid_loss:0.5f}, Elapsed_time: {elapsed_time:0.5f}'
                 writer.add_scalar('Loss/train', train_loss, epoch)
                 writer.add_scalar('Loss/test', valid_loss, epoch)
-                writer.add_scalar('EditDistance', current_norm_ED)
-                writer.add_scalar('Accuracy', current_accuracy)
+                writer.add_scalar('EditDistance', current_norm_ED, epoch)
+                writer.add_scalar('Accuracy', current_accuracy, epoch)
                 
                 loss_avg.reset()
 

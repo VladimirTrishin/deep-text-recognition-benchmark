@@ -16,7 +16,9 @@ class Augmentation(object):
             iaa.Affine(
                 rotate=(-1, 1),
                 scale={"x": (0.8, 1.02), "y": (0.85, 1.0)},
-                translate_percent={"x": (-0.01, 0.01), "y": (-0.05, 0.05)}),
+                translate_percent={"x": (-0.01, 0.01), "y": (-0.06, 0.06)}),
+            iaa.PerspectiveTransform(size=(0, 0.03)),
+            iaa.Resize((0.3, 1.0), 'nearest')
         ])
 
     def __call__(self, image):

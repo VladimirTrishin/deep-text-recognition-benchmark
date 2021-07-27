@@ -251,7 +251,7 @@ class RawDataset(Dataset):
                 img = Image.new('RGB', (self.opt.imgW, self.opt.imgH))
             else:
                 img = Image.new('L', (self.opt.imgW, self.opt.imgH))
-        lbl = Path(self.image_path_list[index]).with_suffix('').name.repace('_', '')
+        lbl = Path(self.image_path_list[index]).with_suffix('').name.replace('_', '')
         return (img, lbl)
 
 

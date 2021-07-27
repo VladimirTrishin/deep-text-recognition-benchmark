@@ -11,6 +11,7 @@
 *.zip
 *.eps
 *.pdf
+card-number-dataset
 
 ### Linux ###
 *~

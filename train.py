@@ -119,15 +119,11 @@ def train(opt):
     print(optimizer)
 
     """ final options """
-    # print(opt)
     with open(f'./saved_models/{opt.exp_name}/opt.txt', 'a') as opt_file:
-        opt_log = '------------ Options -------------\n'
         args = vars(opt)
-        for k, v in args.items():
-            opt_log += f'{str(k)}: {str(v)}\n'
-        opt_log += '---------------------------------------\n'
-        print(opt_log)
-        opt_file.write(opt_log)
+        options = json.dumps(args)
+        print(options)
+        opt_file.write(options)
 
     """ start training """
     start_iter = 0

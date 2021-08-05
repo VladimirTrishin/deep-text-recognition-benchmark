@@ -9,9 +9,11 @@ class Augmentation(object):
     def __init__(self) -> None:
         self.seq = iaa.Sequential([
             iaa.Emboss(),
-            iaa.GaussianBlur(sigma=(0, 1.0)),
-            iaa.AdditiveGaussianNoise(scale=(0, 20)),
-            iaa.GammaContrast((0.5, 2.0)),
+            iaa.pillike.EnhanceContrast(),
+            iaa.pillike.EnhanceBrightness(),
+            iaa.pillike.EnhanceSharpness(),
+            iaa.Sometimes(0.5, iaa.GaussianBlur(sigma=(0, 1.0))),
+            iaa.Sometimes(0.5, iaa.AdditiveGaussianNoise(scale=(0, 20))),
             iaa.Crop(px=(0, 4)),
             iaa.Affine(
                 rotate=(-1, 1),

@@ -33,6 +33,7 @@ class Augmentation2(object):
             aug.Emboss(),
             aug.Sharpen(),
             aug.GaussianBlur(sigma_limit=(0, 1.0)),
+            aug.MotionBlur(),
             aug.GaussNoise(),
             aug.RandomShadow(),
             aug.RandomSunFlare(src_radius=80),

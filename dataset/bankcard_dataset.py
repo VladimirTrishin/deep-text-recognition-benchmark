@@ -44,7 +44,7 @@ class Augmentation2(object):
                 scale={"x": (0.5, 1.0), "y": (0.5, 1.0)},
                 translate_percent={"x": (-0.04, 0.04), "y": (-0.06, 0.06)}
                 ),
-            aug.Perspective(scale=(0, 0.03), fit_output=True),
+            aug.Perspective(scale=(0, 0.1), fit_output=True),
             aug.RandomScale(scale_limit=(0.3, 1.0), interpolation=cv2.INTER_NEAREST)
         ])
 
